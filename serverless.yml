@@ -1,0 +1,31 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: student001
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: https-api
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: http-api
+
+provider:
+  name: aws
+  runtime: python3.8
+
+functions:
+  send-email:
+    handler: handler.send_email
+    events:
+      - http:
+          path: /send-email
+          method: post
+          cors: true
+  index:
+    handler: index.index
+    events:
+      - http:
+          path: /
+          method: get
+
+plugins:
+  - serverless-offline
+
+custom:
+  offlineHandler:./offline_handler
